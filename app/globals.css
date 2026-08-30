@@ -1,0 +1,122 @@
+@import "tailwindcss";
+
+:root {
+  --theme-primary: #1a1a1a;
+  --theme-primary-rgb: 26 26 26;
+  --theme-surface: #ffffff;
+  --theme-surface-rgb: 255 255 255;
+  --theme-accent: #1a1a1a;
+  --theme-accent-rgb: 26 26 26;
+  --theme-soft: #f5f5f5;
+  --theme-hero-deep: #0a0a0a;
+  --theme-hero-mid: #2a2a2a;
+  --background: #ffffff;
+  --foreground: #1a1a1a;
+  --color-primary: var(--theme-primary);
+  --color-wheat: var(--theme-surface);
+  --color-accent: var(--theme-accent);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--theme-primary);
+  --color-surface: var(--theme-surface);
+  --color-accent: var(--theme-accent);
+  --color-soft: var(--theme-soft);
+  --color-hero-deep: var(--theme-hero-deep);
+  --color-hero-mid: var(--theme-hero-mid);
+  --color-wheat: var(--theme-surface);
+  --font-sans: var(--font-marcel), sans-serif;
+  --font-heading: var(--font-chime-saans), var(--font-marcel), sans-serif;
+  --ease-drawer: cubic-bezier(0.22, 1, 0.36, 1);
+  --max-width-home: 1340px;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+p,
+span,
+a,
+li,
+label,
+button,
+input,
+textarea,
+select {
+  font-family: var(--font-sans);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+}
+
+/* Hide the browser’s built-in search clear so custom icons stay consistent. */
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input[type="search"]::-ms-clear {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+@keyframes cta-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cta-drift {
+  from {
+    transform: scale(1.05) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.1) translate3d(-1.5%, -1%, 0);
+  }
+}
+
+@keyframes hotspot-pulse {
+  0% {
+    transform: scale(0.55);
+    opacity: 0.7;
+  }
+  70% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+
+@keyframes alert-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

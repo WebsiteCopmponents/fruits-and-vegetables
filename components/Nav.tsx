@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -147,8 +148,16 @@ export default function Nav() {
           <Link
             href="/"
             aria-label="Global Fruits home"
-            className="justify-self-start lg:justify-self-center"
+            className="flex items-center gap-2 justify-self-start lg:justify-self-center"
           >
+            <Image
+              src="/Frouts_and_vegables_logo.png"
+              alt="Global Fruits"
+              width={32}
+              height={32}
+              className="size-7 sm:size-8"
+              priority
+            />
             <span className="block text-[17px] font-semibold tracking-tight text-[#1a1a1a] sm:text-[20px]">
               Global Fruits
             </span>
@@ -244,8 +253,15 @@ export default function Nav() {
                   <Link
                     href="/"
                     onClick={() => setOpen(false)}
-                    className="text-[20px] leading-none font-semibold tracking-tight text-[#1a1a1a]"
+                    className="flex items-center gap-2 text-[20px] leading-none font-semibold tracking-tight text-[#1a1a1a]"
                   >
+                    <Image
+                      src="/Frouts_and_vegables_logo.png"
+                      alt="Global Fruits"
+                      width={28}
+                      height={28}
+                      className="size-7"
+                    />
                     Global Fruits
                   </Link>
                   <button

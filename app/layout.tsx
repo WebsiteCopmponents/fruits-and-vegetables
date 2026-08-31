@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import TopBar from "@/components/TopBar";
+// import TopBar from "@/components/TopBar";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import MobileBottomNav from "@/components/MobileBottomNav";
@@ -26,7 +26,7 @@ function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <ShopStoreProvider>
       <SearchModalProvider>
-        <TopBar />
+        {/* <TopBar /> */}
         <Nav />
         {children}
         <ServiceFeatures />

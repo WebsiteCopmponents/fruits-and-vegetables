@@ -15,8 +15,8 @@ const slides = [
     cta: "Shop fruit",
     href: "/shop?collection=fruit",
     image:
-      "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=2000&q=80",
-    alt: "Fresh fruit at Global Fruits",
+      "https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=2400&q=90",
+    alt: "Bright mixed fruit at Global Fruits",
   },
   {
     eyebrow: "From the crates",
@@ -24,8 +24,8 @@ const slides = [
     cta: "Shop vegetables",
     href: "/shop?collection=vegetables",
     image:
-      "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=2000&q=80",
-    alt: "Fresh vegetables at Global Fruits",
+      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=2400&q=90",
+    alt: "Bright mixed vegetables at Global Fruits",
   },
 ] as const;
 
@@ -64,7 +64,7 @@ export default function Hero() {
   }, [index, count]);
 
   return (
-    <section className="relative h-[100svh] overflow-hidden bg-[#5f6f5a] text-white">
+    <section className="relative h-[100svh] overflow-hidden bg-[#f3efe6] text-white">
         {slides.map((item, i) => (
           <div
             key={item.image}
@@ -78,17 +78,18 @@ export default function Hero() {
               alt={item.alt}
               fill
               priority={i === 0}
+              quality={90}
               sizes="100vw"
-              className="object-cover object-[center_30%]"
+              className="object-cover object-center brightness-[1.08] contrast-[1.06] saturate-[1.15]"
             />
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.45)_0%,rgba(0,0,0,0.18)_42%,rgba(0,0,0,0.05)_100%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(105deg,rgba(0,0,0,0.28)_0%,rgba(0,0,0,0.08)_34%,transparent_62%)]" />
           </div>
         ))}
 
         <div
           className={`relative z-10 flex h-full flex-col justify-center py-20 md:py-24 ${homeContainerClass} px-4 sm:px-6 lg:px-8`}
         >
-          <div className="max-w-xl">
+          <div className="max-w-xl [text-shadow:0_2px_22px_rgba(0,0,0,0.28)]">
             <p className="text-[12px] font-semibold tracking-[0.22em] text-white uppercase">
               {slide.eyebrow}
             </p>

@@ -5,21 +5,21 @@ import { homeContainerClass } from "@/components/home/homeLayout";
 
 const items = [
   {
-    href: "/shop",
-    name: "Structured Leather Tote",
-    price: "$168.00",
+    href: "/shop/strawberries",
+    name: "Strawberries",
+    price: "£3.20",
     image:
-      "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=1200&q=80",
-    alt: "Structured leather tote",
+      "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&w=1200&q=80",
+    alt: "Fresh strawberries",
     tone: "bg-[#c4b4a4]",
   },
   {
-    href: "/shop",
-    name: "Everyday Canvas Tote",
-    price: "$78.00",
+    href: "/shop/scottish-carrots",
+    name: "Carrots",
+    price: "£1.20",
     image:
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=1200&q=80",
-    alt: "Everyday canvas tote",
+      "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?auto=format&fit=crop&w=1200&q=80",
+    alt: "Fresh carrots",
     tone: "bg-[#8a9484]",
   },
 ] as const;
@@ -38,11 +38,11 @@ export default function HomeHotItem() {
               Hot Item
             </p>
             <h2 className="mt-5 max-w-[16ch] text-[32px] leading-[1.15] font-medium tracking-tight text-[#1a1a1a] md:text-[40px] lg:text-[44px]">
-              Soft structure, made to carry daily.
+              Fresh fruit and veg, priced for Edinburgh.
             </h2>
             <p className="mt-5 max-w-sm text-[15px] leading-relaxed text-[#1a1a1a]/70">
-              Easy, breathable canvas and refined leather totes — light to hold,
-              built for every day.
+              Strawberries, carrots, and more from the crates — greengrocer
+              prices in GBP.
             </p>
             <CtaButton href="/shop" className="mt-8">
               Shop Now

@@ -27,7 +27,7 @@ export default function SearchClient() {
     <PageShell
       eyebrow="Search"
       title="Search"
-      description="Find totes by name, collection, or keyword."
+      description="Find fruit, veg, and spices by name or keyword."
     >
       <form
         onSubmit={(e) => e.preventDefault()}
@@ -36,7 +36,7 @@ export default function SearchClient() {
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="Search totes…"
+          placeholder="Search produce…"
           className="w-full rounded-full border border-black/12 bg-surface px-5 py-3.5 text-[15px] outline-none focus:border-black/40"
         />
         <button
@@ -50,7 +50,7 @@ export default function SearchClient() {
       <div className="mt-10">
         {!q.trim() ? (
           <p className="text-[15px] text-[#1a1a1a]/55">
-            Try “leather”, “canvas”, or “weekend”.
+            Try “apples”, “carrots”, or “ginger”.
           </p>
         ) : results.length === 0 ? (
           <EmptyState

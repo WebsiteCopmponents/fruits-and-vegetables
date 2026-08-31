@@ -1,26 +1,17 @@
 import { NextResponse } from "next/server";
 import { isWooConfigured } from "@/lib/woo";
-import { isWpConfigured } from "@/lib/wordpress";
 import { getCatalog } from "@/lib/products";
-import { getBlogPosts } from "@/lib/blogs";
 
 export const dynamic = "force-dynamic";
 
 /** Quick connection check — no secrets returned. */
 export async function GET() {
   const wooConfigured = isWooConfigured();
-  const wpConfigured = isWpConfigured();
 
   let products = {
     ok: false as boolean,
     count: 0,
     sample: null as null | { id: number; slug: string; name: string },
-    error: null as string | null,
-  };
-
-  let posts = {
-    ok: false as boolean,
-    count: 0,
     error: null as string | null,
   };
 
@@ -44,17 +35,7 @@ export async function GET() {
     }
   }
 
-  if (wpConfigured) {
-    try {
-      const list = await getBlogPosts(5);
-      posts = { ok: true, count: list.length, error: null };
-    } catch (err) {
-      posts.error = err instanceof Error ? err.message : "WP fetch failed";
-    }
-  }
-
   return NextResponse.json({
     woo: { configured: wooConfigured, ...products },
-    wordpress: { configured: wpConfigured, ...posts },
   });
 }

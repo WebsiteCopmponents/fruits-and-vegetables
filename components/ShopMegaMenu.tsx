@@ -5,29 +5,22 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import type { MegaMenuGroup } from "@/lib/mega-menu";
 
-const homePages = [
-  { href: "/", label: "Home" },
-  { href: "/home-v2", label: "Home v2" },
-  { href: "/home-v3", label: "Home v3" },
-];
-
-const blogs = [
+const featuredLooks = [
   {
-    href: "/blogs/how-to-choose-the-right-tote",
-    title: "How to choose the right tote",
-    description:
-      "Canvas, leather, mini, or oversized — a simple everyday guide.",
+    href: "/shop?collection=fruit",
+    title: "Fresh fruit",
+    description: "Seasonal apples, berries, citrus, and exotic fruit.",
     image:
-      "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=900&q=80",
-    alt: "Leather tote bag",
+      "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=900&q=80",
+    alt: "Fresh mixed fruit",
   },
   {
-    href: "/blogs/care-tips-for-canvas-bags",
-    title: "Care tips for canvas bags",
-    description: "Keep your tote looking fresh with easy maintenance habits.",
+    href: "/shop?collection=vegetables",
+    title: "Fresh vegetables",
+    description: "Scottish carrots, potatoes, salad, and everyday veg.",
     image:
-      "https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?auto=format&fit=crop&w=900&q=80",
-    alt: "Woven mini tote bag",
+      "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=900&q=80",
+    alt: "Fresh mixed vegetables",
   },
 ];
 
@@ -100,27 +93,27 @@ export default function ShopMegaMenu({
           </div>
         ))}
 
-        {blogs.map((blog) => (
+        {featuredLooks.map((look) => (
           <Link
-            key={blog.title}
-            href={blog.href}
+            key={look.title}
+            href={look.href}
             onClick={onClose}
             className="group block bg-gray-100 p-4 rounded-3xl transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-gray-200"
           >
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-soft">
               <Image
-                src={blog.image}
-                alt={blog.alt}
+                src={look.image}
+                alt={look.alt}
                 fill
                 sizes="320px"
                 className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
               />
             </div>
             <h3 className="mt-4 text-[18px] font-bold tracking-tight text-black">
-              {blog.title}
+              {look.title}
             </h3>
             <p className="mt-2 text-[14px] leading-relaxed text-neutral-500">
-              {blog.description}
+              {look.description}
             </p>
           </Link>
         ))}

@@ -19,10 +19,7 @@ const tabs = [
   {
     href: "/account",
     label: "Account",
-    match: (path: string) =>
-      path === "/account" ||
-      path.startsWith("/sign-in") ||
-      path.startsWith("/sign-up"),
+    match: (path: string) => path === "/account",
   },
 ] as const;
 

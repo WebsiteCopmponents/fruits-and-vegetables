@@ -81,12 +81,12 @@ function ShopPageContent() {
             Shop
           </p>
           <h1 className="mt-3 text-[36px] font-medium tracking-tight text-[#1a1a1a] md:text-[44px]">
-            {activeLabel ?? "Tote bags"}
+            {activeLabel ?? "Fruit & vegetables"}
           </h1>
           <p className="mt-4 text-[17px] leading-relaxed text-[#1a1a1a]/70">
             {filters.newArrivals
-              ? "Fresh arrivals — just in from the studio."
-              : "Everyday totes for work, weekends, and everything you carry."}
+              ? "Fresh arrivals — just in this week."
+              : "Fresh fruit, vegetables, exotic spices, and home deliveries."}
           </p>
         </div>
 
@@ -118,7 +118,7 @@ function ShopPageContent() {
               <div className="rounded-[24px] border border-black/8 bg-surface p-8 text-[15px] text-[#1a1a1a]/60">
                 {query.trim() || filters.collection || filters.newArrivals
                   ? "No products match your search or filter."
-                  : "No products yet. Publish a product in WooCommerce and refresh."}
+                  : "No produce to show yet. Check back shortly."}
                 {catalogSource === "woo" &&
                 !query.trim() &&
                 !filters.collection &&

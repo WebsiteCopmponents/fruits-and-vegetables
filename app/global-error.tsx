@@ -13,13 +13,13 @@ export default function GlobalError({
   unstable_retry: () => void;
 }) {
   useEffect(() => {
-    console.error("[lagracia:global]", error);
+    console.error("[global-fruits:global]", error);
   }, [error]);
 
   return (
     <html lang="en" className={`${marcel.variable} ${viktor.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
-        <title>Something went wrong · La Gracia</title>
+        <title>Something went wrong · Global Fruits</title>
         <ErrorState
           title="Something went wrong"
           description="A critical error stopped the page from loading. Try again, or head home and continue shopping."

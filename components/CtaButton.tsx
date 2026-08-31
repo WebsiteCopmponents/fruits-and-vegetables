@@ -25,7 +25,7 @@ export default function CtaButton({
   disabled,
 }: CtaButtonProps) {
   const classes = cn(
-    "group inline-flex items-center gap-3 rounded-full bg-primary py-1.5 pr-1.5 pl-5 text-[14px] font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-60",
+    "group inline-flex items-center justify-between gap-3 rounded-full bg-primary py-1.5 pr-1.5 pl-5 text-[14px] font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-60",
     className,
   );
 

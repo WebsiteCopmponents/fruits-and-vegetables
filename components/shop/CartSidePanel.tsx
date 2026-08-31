@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -32,25 +33,23 @@ function expectedDeliveryRange() {
 
 function productDetailRows(product: Product) {
   const collection = product.collection.toLowerCase();
-  const isLeather = collection.includes("leather");
-  const isMini = collection.includes("mini");
+  const origin = product.slug.includes("scottish")
+    ? "Scotland"
+    : "Selected for Edinburgh";
+  const type = collection.includes("fruit")
+    ? "Fresh fruit"
+    : collection.includes("veg")
+      ? "Fresh vegetables"
+      : product.collection;
 
   return [
     {
-      label: "Dimensions",
-      value: isMini
-        ? "28 × 22 × 10 cm"
-        : isLeather
-          ? "38 × 32 × 14 cm"
-          : "42 × 35 × 12 cm",
+      label: "Origin",
+      value: origin,
     },
     {
-      label: "Height with handles",
-      value: isMini ? "38 cm" : isLeather ? "48 cm" : "52 cm",
-    },
-    {
-      label: "Material",
-      value: isLeather ? "Full-grain leather" : "Heavyweight canvas",
+      label: "Type",
+      value: type,
     },
     {
       label: "Collection",
@@ -110,6 +109,15 @@ function CartDetailsAccordion({ product }: { product: Product }) {
         className="overflow-hidden"
       >
         <div ref={contentRef} className="space-y-3 border-t border-[#F5F5F6] px-4 pt-3 pb-4">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-[#f3f3f3]">
+            <Image
+              src={product.image}
+              alt={product.name}
+              fill
+              sizes="360px"
+              className="object-cover object-center h-full w-full rounded-3xl"
+            />
+          </div>
           {rows.map((row) => (
             <div key={row.label} className="flex gap-4 text-[13px] leading-relaxed">
               <span className="w-28 shrink-0 text-[#1a1a1a]/45">{row.label}</span>
@@ -126,19 +134,27 @@ function CartProductCard({
   item,
   highlighted = false,
   onRemove,
-  onDecrease,
-  onIncrease,
   onClose,
 }: {
   item: { product: Product; qty: number };
   highlighted?: boolean;
   onRemove: () => void;
-  onDecrease: () => void;
-  onIncrease: () => void;
   onClose: () => void;
 }) {
+  const { setQty } = useShopStore();
   const { product, qty } = item;
   const inStock = product.stockStatus !== "outofstock";
+  const [direction, setDirection] = useState(1);
+
+  function decrease() {
+    setDirection(-1);
+    setQty(product.slug, qty - 1, { silent: true });
+  }
+
+  function increase() {
+    setDirection(1);
+    setQty(product.slug, qty + 1, { silent: true });
+  }
 
   return (
     <div
@@ -148,6 +164,19 @@ function CartProductCard({
       style={{ borderColor: CARD_BORDER }}
     >
       <div className="flex items-start justify-between gap-3">
+        <Link
+          href={`/shop/${product.slug}`}
+          onClick={onClose}
+          className="relative size-[72px] shrink-0 overflow-hidden rounded-2xl bg-[#f3f3f3]"
+        >
+          <Image
+            src={product.image}
+            alt={product.name}
+            fill
+            sizes="72px"
+            className="object-cover object-center h-full w-full rounded-2xl"
+          />
+        </Link>
         <div className="min-w-0 flex-1">
           <Link
             href={`/shop/${product.slug}`}
@@ -199,18 +228,30 @@ function CartProductCard({
           <button
             type="button"
             aria-label="Decrease quantity"
-            onClick={onDecrease}
+            onClick={decrease}
             className="flex size-9 items-center justify-center text-[#1a1a1a]"
           >
             −
           </button>
-          <span className="min-w-8 text-center text-[14px] font-medium">
-            {qty}
+          <span className="relative flex h-6 w-7 items-center justify-center overflow-hidden text-[14px] font-medium text-[#1a1a1a] tabular-nums">
+            <AnimatePresence mode="popLayout" initial={false} custom={direction}>
+              <motion.span
+                key={qty}
+                custom={direction}
+                initial={{ y: direction > 0 ? 14 : -14, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: direction > 0 ? -14 : 14, opacity: 0 }}
+                transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute"
+              >
+                {qty}
+              </motion.span>
+            </AnimatePresence>
           </span>
           <button
             type="button"
             aria-label="Increase quantity"
-            onClick={onIncrease}
+            onClick={increase}
             className="flex size-9 items-center justify-center text-[#1a1a1a]"
           >
             +
@@ -235,7 +276,6 @@ export default function CartSidePanel() {
     catalog,
     catalogReady,
     addToCart,
-    setQty,
     removeFromCart,
   } = useShopStore();
 
@@ -323,12 +363,6 @@ export default function CartSidePanel() {
                       item={item}
                       highlighted={item.product.slug === cartPanelProductSlug}
                       onRemove={() => removeFromCart(item.product.slug)}
-                      onDecrease={() =>
-                        setQty(item.product.slug, item.qty - 1)
-                      }
-                      onIncrease={() =>
-                        setQty(item.product.slug, item.qty + 1)
-                      }
                       onClose={closeCartPanel}
                     />
                   ))}
@@ -346,7 +380,7 @@ export default function CartSidePanel() {
                     onClick={closeCartPanel}
                     className="mt-4"
                   >
-                    Browse totes
+                    Browse produce
                   </CtaButton>
                 </div>
               )}

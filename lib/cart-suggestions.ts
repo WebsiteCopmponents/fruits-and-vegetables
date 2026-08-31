@@ -10,44 +10,43 @@ export type CartSuggestion = {
   collection?: string;
 };
 
-/** Fallback suggestions when the live catalog is empty. */
 export const dummyCartSuggestions: CartSuggestion[] = [
   {
-    id: "suggest-weekend",
-    slug: "weekend-market-tote",
-    name: "Weekend Market Tote",
-    subtitle: "Weekend · Wide opening",
-    collection: "Weekend",
-    price: 78,
+    id: "suggest-apples",
+    slug: "scottish-apples",
+    name: "Apples",
+    subtitle: "Fruit · 6-pack",
+    collection: "Fruit",
+    price: 2.5,
     image:
-      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?auto=format&fit=crop&w=400&q=80",
   },
   {
-    id: "suggest-leather",
-    slug: "structured-leather-tote",
-    name: "Structured Leather Tote",
-    subtitle: "Leather · Work-ready",
-    collection: "Leather",
-    price: 148,
+    id: "suggest-carrots",
+    slug: "scottish-carrots",
+    name: "Carrots",
+    subtitle: "Vegetables · 1kg",
+    collection: "Vegetables",
+    price: 1.2,
     image:
-      "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?auto=format&fit=crop&w=400&q=80",
   },
   {
-    id: "suggest-mini",
-    slug: "mini-crossbody-tote",
-    name: "Mini Crossbody Tote",
-    subtitle: "Mini Bags · Hands-free",
-    collection: "Mini Bags",
-    price: 58,
+    id: "suggest-strawberries",
+    slug: "strawberries",
+    name: "Strawberries",
+    subtitle: "Fruit · 400g punnet",
+    collection: "Fruit",
+    price: 3.2,
     image:
-      "https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&w=400&q=80",
   },
 ];
 
 const dummyIdBySlug: Record<string, number> = {
-  "weekend-market-tote": 9001,
-  "structured-leather-tote": 9002,
-  "mini-crossbody-tote": 9003,
+  "scottish-apples": 9001,
+  "scottish-carrots": 9002,
+  strawberries: 9003,
 };
 
 export function productToSuggestion(product: Product): CartSuggestion {
@@ -86,7 +85,6 @@ export function suggestionToProduct(suggestion: CartSuggestion): Product {
   };
 }
 
-/** Resolve dummy suggestion products — only needed when catalog is empty. */
 export function resolveSuggestionProduct(slug: string): Product | undefined {
   const suggestion = dummyCartSuggestions.find((item) => item.slug === slug);
   return suggestion ? suggestionToProduct(suggestion) : undefined;
@@ -96,9 +94,6 @@ export function isDummySuggestionSlug(slug: string) {
   return dummyCartSuggestions.some((item) => item.slug === slug);
 }
 
-/**
- * Real catalog products first; dummy picks only when catalog has no products.
- */
 export function getCartSuggestions(
   catalog: Product[],
   focusSlug: string | null,

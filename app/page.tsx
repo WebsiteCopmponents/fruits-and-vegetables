@@ -6,25 +6,24 @@ import HomeFeatures from "@/components/home/HomeFeatures";
 import HomeFaqs from "@/components/home/HomeFaqs";
 import HomeHelpContact from "@/components/home/HomeHelpContact";
 import HomeReviews from "@/components/home/HomeReviews";
+import HomeStoreLocation from "@/components/home/HomeStoreLocation";
 import HomeBlogs from "@/components/home/HomeBlogs";
 import HomeStoryCarousel from "@/components/home/HomeStoryCarousel";
 
 export default function Home() {
   return (
-    <main className="flex-1">
+    <main className="flex-1 bg-white">
       <Hero />
-      {/* Sits above the fixed hero and scrolls over it */}
-      <div className="relative z-10 bg-white">
-        <HomeExploreCategories />
-        <HomeStoryCarousel />
-        <HomeHotItem />
-        <HomeProductSpotlight />
-        <HomeFeatures />
-        <HomeReviews />
-        <HomeBlogs />
-        <HomeFaqs />
-        <HomeHelpContact />
-      </div>
+      <HomeExploreCategories />
+      <HomeStoryCarousel />
+      <HomeHotItem />
+      <HomeProductSpotlight />
+      <HomeFeatures />
+      <HomeReviews />
+      <HomeStoreLocation />
+      <HomeBlogs />
+      <HomeFaqs />
+      <HomeHelpContact />
     </main>
   );
 }

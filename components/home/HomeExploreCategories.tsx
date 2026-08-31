@@ -9,19 +9,15 @@ import { homeContainerClass } from "@/components/home/homeLayout";
 import { formatPrice, type Product } from "@/lib/products";
 import { useShopStore } from "@/lib/shop-store";
 
-const tabs = ["Canvas", "Leather"] as const;
+const tabs = ["Fruit", "Vegetables"] as const;
 
 function matchesTab(product: Product, tab: (typeof tabs)[number]) {
-  const hay = `${product.collection} ${product.name}`.toLowerCase();
-  if (tab === "Canvas") {
-    return hay.includes("canvas") || (!hay.includes("leather") && !hay.includes("mini"));
-  }
-  return hay.includes("leather");
+  return product.collection === tab;
 }
 
 export default function HomeExploreCategories() {
   const { catalog, catalogReady } = useShopStore();
-  const [tab, setTab] = useState<(typeof tabs)[number]>("Canvas");
+  const [tab, setTab] = useState<(typeof tabs)[number]>("Fruit");
   const scrollerRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
   const [canPrev, setCanPrev] = useState(false);
@@ -64,7 +60,7 @@ export default function HomeExploreCategories() {
   }
 
   return (
-    <section className="relative -mt-10 rounded-t-3xl bg-[#F0EBFF] pt-10 pb-14 shadow-[0_-20px_60px_rgba(0,0,0,0.18)] md:-mt-12 md:pt-12 md:pb-16">
+    <section className="relative bg-[#F0EBFF] pt-10 pb-14 md:pt-12 md:pb-16">
       <div className={homeContainerClass}>
         <div className="flex flex-wrap items-center justify-between gap-4">
           <h2 className="text-[26px] font-semibold tracking-tight text-[#1a1a1a] md:text-[32px]">

@@ -11,7 +11,7 @@ export default function Error({
   unstable_retry: () => void;
 }) {
   useEffect(() => {
-    console.error("[lagracia]", error);
+    console.error("[global-fruits]", error);
   }, [error]);
 
   return (

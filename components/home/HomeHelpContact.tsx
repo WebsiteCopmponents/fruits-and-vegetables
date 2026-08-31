@@ -11,9 +11,9 @@ export default function HomeHelpContact() {
           </h2>
           <p className="mt-2 text-[15px] leading-relaxed text-[#1a1a1a]/60">
             Message us on WhatsApp or email — we’re happy to point you to the
-            right tote.
+            right fruit or veg.
           </p>
-          <ContactOptions label="Reach the studio" />
+          <ContactOptions label="Reach the shop" />
         </div>
       </div>
     </section>

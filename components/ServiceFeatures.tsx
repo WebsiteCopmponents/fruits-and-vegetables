@@ -12,13 +12,13 @@ const features: {
   icon: LucideIcon;
 }[] = [
   {
-    title: "Free delivery",
-    body: "On orders over $85 in most regions.",
+    title: "Home delivery",
+    body: "Fruit and veg boxes across Edinburgh.",
     icon: Package,
   },
   {
-    title: "Free returns",
-    body: "Up to 30 days to return your items.",
+    title: "Fresh daily",
+    body: "Produce packed from the crates each morning.",
     icon: RotateCcw,
   },
   {

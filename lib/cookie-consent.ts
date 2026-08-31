@@ -1,7 +1,7 @@
 export type CookieConsentChoice = "all" | "essential" | "rejected";
 
-export const COOKIE_CONSENT_KEY = "lagracia-cookie-consent";
-export const COOKIE_CONSENT_EVENT = "lagracia-cookie-consent";
+export const COOKIE_CONSENT_KEY = "global-fruits-cookie-consent";
+export const COOKIE_CONSENT_EVENT = "global-fruits-cookie-consent";
 
 export function readCookieConsent(): CookieConsentChoice | null {
   if (typeof window === "undefined") return null;

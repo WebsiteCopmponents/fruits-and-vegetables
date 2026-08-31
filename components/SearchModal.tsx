@@ -15,7 +15,7 @@ import { useSearchModal } from "@/lib/search-modal";
 
 const SUGGESTED_LIMIT = 4;
 
-const SUGGESTED_SEARCHES = ["Leather", "Canvas", "Weekend", "Mini", "Tote"];
+const SUGGESTED_SEARCHES = ["Apples", "Carrots", "Strawberries", "Mango", "Ginger"];
 
 const fallbackSuggestedProducts = dummyCartSuggestions.map(suggestionToProduct);
 
@@ -183,7 +183,7 @@ export default function SearchModal() {
                   type="search"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search totes, collections, keywords…"
+                  placeholder="Search fruit, veg, spices…"
                   autoComplete="off"
                   autoCorrect="off"
                   spellCheck={false}
@@ -291,7 +291,7 @@ export default function SearchModal() {
                         onClick={closeSearch}
                         className="mt-1"
                       >
-                        Browse all totes
+                        Browse all produce
                       </CtaButton>
                     </div>
                   ) : null}

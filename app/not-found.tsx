@@ -6,7 +6,7 @@ import ProductCard from "@/components/shop/ProductCard";
 import { getProducts } from "@/lib/products";
 
 export const metadata: Metadata = {
-  title: "Page not found · La Gracia",
+  title: "Page not found · Global Fruits",
   description: "This page doesn’t exist or may have moved.",
 };
 
@@ -50,20 +50,20 @@ export default async function NotFound() {
             <CtaButton href="/" arrow="left">
               Back to home
             </CtaButton>
-            <CtaButton href="/shop">Browse totes</CtaButton>
+            <CtaButton href="/shop">Browse produce</CtaButton>
           </div>
 
           <div className="mt-12 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[14px] text-[#1a1a1a]/55">
-            <Link href="/blogs" className="hover:text-accent">
-              Journal
+            <Link href="/wishlist" className="hover:text-accent">
+              Wishlist
             </Link>
             <span aria-hidden>·</span>
-            <Link href="/contact" className="hover:text-accent">
-              Contact
+            <Link href="/cart" className="hover:text-accent">
+              Cart
             </Link>
             <span aria-hidden>·</span>
-            <Link href="/faqs" className="hover:text-accent">
-              FAQs
+            <Link href="/search" className="hover:text-accent">
+              Search
             </Link>
           </div>
         </div>
@@ -79,7 +79,7 @@ export default async function NotFound() {
                   Keep exploring
                 </h2>
                 <p className="mt-2 max-w-md text-[15px] text-[#1a1a1a]/60">
-                  Everyday totes from the shop while we get you back on track.
+                  Fresh fruit and veg from the shop while we get you back on track.
                 </p>
               </div>
               <Link
@@ -104,9 +104,9 @@ export default async function NotFound() {
           </h2>
           <p className="mt-2 text-[15px] leading-relaxed text-[#1a1a1a]/60">
             Message us on WhatsApp or email — we’re happy to point you to the
-            right tote.
+            right fruit or veg.
           </p>
-          <ContactOptions label="Reach the studio" />
+          <ContactOptions label="Reach the shop" />
         </section>
       </div>
     </main>

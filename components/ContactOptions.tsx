@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { EMAIL, MAILTO_URL, WHATSAPP_CHAT_URL } from "@/lib/contact";
 
 export default function ContactOptions({
@@ -27,13 +26,6 @@ export default function ContactOptions({
           <MailIcon />
           {EMAIL}
         </a>
-
-        <Link
-          href="/contact"
-          className="inline-flex items-center gap-2.5 rounded-full border border-black/15 bg-surface px-5 py-2.5 text-[14px] font-medium text-[#1a1a1a] transition-colors hover:border-primary/40 hover:bg-soft"
-        >
-          Contact form
-        </Link>
       </div>
     </div>
   );

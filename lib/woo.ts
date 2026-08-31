@@ -206,7 +206,7 @@ export async function createWooOrder(input: CreateOrderInput) {
     cache: "no-store",
     body: JSON.stringify({
       payment_method: "cod",
-      payment_method_title: "Paid on La Gracia checkout",
+      payment_method_title: "Paid on Global Fruits checkout",
       set_paid: false,
       status: "processing",
       billing: {
@@ -238,7 +238,7 @@ export async function createWooOrder(input: CreateOrderInput) {
         ...(input.clerkUserId
           ? [{ key: "clerk_user_id", value: input.clerkUserId }]
           : []),
-        { key: "source", value: "lagracia-next" },
+        { key: "source", value: "global-fruits-next" },
       ],
     }),
   });

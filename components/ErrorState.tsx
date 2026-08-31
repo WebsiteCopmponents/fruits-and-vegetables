@@ -83,20 +83,20 @@ export default function ErrorState({
             <CtaButton href="/" arrow="left">
               Back to home
             </CtaButton>
-            <CtaButton href="/shop">Browse totes</CtaButton>
+            <CtaButton href="/shop">Browse produce</CtaButton>
           </div>
 
           <div className="mt-12 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[14px] text-[#1a1a1a]/55">
-            <Link href="/blogs" className="hover:text-accent">
-              Journal
+            <Link href="/wishlist" className="hover:text-accent">
+              Wishlist
             </Link>
             <span aria-hidden>·</span>
-            <Link href="/contact" className="hover:text-accent">
-              Contact
+            <Link href="/cart" className="hover:text-accent">
+              Cart
             </Link>
             <span aria-hidden>·</span>
-            <Link href="/faqs" className="hover:text-accent">
-              FAQs
+            <Link href="/search" className="hover:text-accent">
+              Search
             </Link>
           </div>
         </div>
@@ -112,7 +112,7 @@ export default function ErrorState({
                   Keep exploring
                 </h2>
                 <p className="mt-2 max-w-md text-[15px] text-[#1a1a1a]/60">
-                  Everyday totes from the shop while we sort this out.
+                  Fresh fruit and veg from the shop while we sort this out.
                 </p>
               </div>
               <Link
@@ -138,7 +138,7 @@ export default function ErrorState({
           <p className="mt-2 text-[15px] leading-relaxed text-[#1a1a1a]/60">
             Message us on WhatsApp or email — we’ll help you get back shopping.
           </p>
-          <ContactOptions label="Reach the studio" />
+          <ContactOptions label="Reach the shop" />
         </section>
       </div>
     </main>

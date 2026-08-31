@@ -1,51 +1,21 @@
 import { homeContainerClass } from "@/components/home/homeLayout";
-
-const reviews = [
-  {
-    title: "My everyday bag now",
-    quote:
-      "The leather tote holds its shape all day and still feels light on my shoulder. It’s the bag I reach for without thinking.",
-    name: "Priya M.",
-    rating: 5,
-  },
-  {
-    title: "Soft, strong, roomy",
-    quote:
-      "Soft canvas, sturdy straps, and enough space for laptop plus market runs. Finally a tote that doesn’t look worn after a week.",
-    name: "James L.",
-    rating: 5,
-  },
-  {
-    title: "Gift that got used daily",
-    quote:
-      "Ordered the quilted print as a gift — the finish is careful and the colors are richer in person. She carries it every day now.",
-    name: "Amelia R.",
-    rating: 5,
-  },
-  {
-    title: "Quiet luxury, done right",
-    quote:
-      "Clean lines, thoughtful details, and it pairs with everything. Feels premium without trying too hard.",
-    name: "Sofia K.",
-    rating: 5,
-  },
-] as const;
+import { BUSINESS, BUSINESS_REVIEWS } from "@/lib/business";
 
 export default function HomeReviews() {
   return (
-    <section className="bg-white py-16 md:py-24">
+    <section id="reviews" className="bg-white py-16 md:py-24">
       <div className={homeContainerClass}>
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-[13px] font-medium tracking-[0.18em] text-[#1a1a1a]/45 uppercase">
-            Our reviews
+            {BUSINESS.reviewSource}
           </p>
           <h2 className="mt-3 text-[32px] font-medium tracking-tight text-[#1a1a1a] md:text-[40px]">
-            Over 10,000+ Happy Customers
+            {BUSINESS.rating} from {BUSINESS.reviewCount} Google reviews
           </h2>
         </div>
 
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
-          {reviews.map((review) => (
+          {BUSINESS_REVIEWS.map((review) => (
             <article
               key={review.name}
               className="rounded-[24px] border border-black/8 bg-surface/80 px-6 py-8 text-left shadow-[0_12px_32px_rgba(26,26,26,0.04)]"
@@ -62,7 +32,7 @@ export default function HomeReviews() {
                   {review.name}
                 </p>
                 <p className="shrink-0 text-[12px] font-semibold text-[#2f6b4f]">
-                  Verified Buyer
+                  {review.source}
                 </p>
               </div>
             </article>

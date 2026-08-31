@@ -31,7 +31,7 @@ export function PaymentIcons({ className = "" }: { className?: string }) {
   );
 }
 
-function VisaIcon({ className }: PaymentIconProps) {
+export function VisaIcon({ className }: PaymentIconProps) {
   return (
     <svg
       className={className}
@@ -53,7 +53,7 @@ function VisaIcon({ className }: PaymentIconProps) {
   );
 }
 
-function MastercardIcon({ className }: PaymentIconProps) {
+export function MastercardIcon({ className }: PaymentIconProps) {
   return (
     <svg
       className={className}
@@ -73,7 +73,7 @@ function MastercardIcon({ className }: PaymentIconProps) {
   );
 }
 
-function AmexIcon({ className }: PaymentIconProps) {
+export function AmexIcon({ className }: PaymentIconProps) {
   return (
     <svg
       className={className}
@@ -91,7 +91,7 @@ function AmexIcon({ className }: PaymentIconProps) {
   );
 }
 
-function PaypalIcon({ className }: PaymentIconProps) {
+export function PaypalIcon({ className }: PaymentIconProps) {
   return (
     <svg
       className={className}
@@ -161,6 +161,96 @@ function DiscoverIcon({ className }: PaymentIconProps) {
       >
         DISCOVER
       </text>
+    </svg>
+  );
+}
+
+export function ApplePayIcon({ className }: PaymentIconProps) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 56 32"
+      width="44"
+      height="24"
+      aria-hidden
+    >
+      <rect width="56" height="32" rx="6" fill="#111" />
+      <path
+        fill="#fff"
+        d="M16.3 9.4c.7-.8 1.16-2 1.03-3.15-1 .05-2.2.66-2.92 1.5-.64.75-1.2 1.96-1.05 3.11 1.12.09 2.26-.57 2.94-1.46zm.08 1.66c-1.52-.09-2.82.87-3.54.87-.74 0-1.84-.82-3.03-.8-1.56.03-3 .9-3.8 2.3-1.62 2.81-.41 6.97 1.16 9.25.77 1.12 1.69 2.36 2.9 2.32 1.16-.05 1.6-.75 3-.75 1.39 0 1.79.75 3.02.72 1.25-.02 2.05-1.13 2.81-2.25.88-1.29 1.24-2.54 1.26-2.6-.03 0-2.43-.93-2.46-3.7-.02-2.31 1.9-3.42 1.98-3.47-1.08-1.6-2.77-1.77-3.3-1.81z"
+      />
+      <text
+        x="24.5"
+        y="21.2"
+        fill="#fff"
+        fontSize="12.5"
+        fontFamily="Arial, Helvetica, sans-serif"
+        fontWeight="500"
+      >
+        Pay
+      </text>
+    </svg>
+  );
+}
+
+export function GooglePayIcon({ className }: PaymentIconProps) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 56 32"
+      width="44"
+      height="24"
+      aria-hidden
+    >
+      <rect width="56" height="32" rx="6" fill="#fff" stroke="#E6E6E6" />
+      <path
+        fill="#4285F4"
+        d="M18.2 16.3c0-.46-.04-.9-.11-1.32h-5.3v2.5h3.04c-.13.7-.53 1.3-1.13 1.7v1.4h1.83c1.07-1 1.67-2.46 1.67-4.28z"
+      />
+      <path
+        fill="#34A853"
+        d="M12.79 21.5c1.53 0 2.82-.5 3.76-1.37l-1.83-1.4c-.51.34-1.16.55-1.93.55-1.48 0-2.74-.99-3.19-2.33H7.7v1.45c.93 1.85 2.84 3.1 5.09 3.1z"
+      />
+      <path
+        fill="#FBBC05"
+        d="M9.6 16.95c-.12-.34-.18-.71-.18-1.08s.06-.74.18-1.08v-1.45H7.7a4.7 4.7 0 0 0 0 5.06l1.9-1.45z"
+      />
+      <path
+        fill="#EA4335"
+        d="M12.79 11.6c.83 0 1.58.29 2.17.85l1.63-1.62C15.6 9.9 14.31 9.35 12.79 9.35c-2.25 0-4.16 1.25-5.09 3.1l1.9 1.45c.45-1.34 1.71-2.3 3.19-2.3z"
+      />
+      <text
+        x="22.5"
+        y="20.8"
+        fill="#5F6368"
+        fontSize="11.5"
+        fontFamily="Arial, Helvetica, sans-serif"
+        fontWeight="500"
+      >
+        Pay
+      </text>
+    </svg>
+  );
+}
+
+export function CashPayIcon({ className }: PaymentIconProps) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 48 32"
+      width="38"
+      height="24"
+      aria-hidden
+    >
+      <rect width="48" height="32" rx="6" fill="#1B7A3A" />
+      <rect x="7" y="8" width="34" height="16" rx="2.5" fill="#E8F6EC" />
+      <rect x="9" y="10" width="30" height="12" rx="1.5" fill="#fff" />
+      <circle cx="24" cy="16" r="4.2" fill="#1B7A3A" />
+      <circle cx="24" cy="16" r="2.4" fill="#E8F6EC" />
+      <path
+        fill="#1B7A3A"
+        d="M11 12.2h3.2v1.2H11zm22.8 6.4H37v1.2h-3.2z"
+      />
     </svg>
   );
 }

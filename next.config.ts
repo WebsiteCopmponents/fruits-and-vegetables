@@ -11,9 +11,7 @@ function envHostname(raw: string | undefined): string | null {
 
 const hosts = Array.from(
   new Set(
-    [envHostname(process.env.WOO_URL), envHostname(process.env.WP_URL)].filter(
-      Boolean,
-    ) as string[],
+    [envHostname(process.env.WOO_URL)].filter(Boolean) as string[],
   ),
 );
 
@@ -23,25 +21,6 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "images.unsplash.com",
-      },
-      {
-        protocol: "https",
-        hostname: "img.clerk.com",
-      },
-      {
-        protocol: "https",
-        hostname: "images.clerk.dev",
-      },
-      // Jetpack / WordPress.com image CDN
-      { protocol: "https", hostname: "i0.wp.com" },
-      { protocol: "https", hostname: "i1.wp.com" },
-      { protocol: "https", hostname: "i2.wp.com" },
-      { protocol: "https", hostname: "i3.wp.com" },
-      // Default WP blogs host
-      {
-        protocol: "https",
-        hostname: "ship.lagracia.co.uk",
-        pathname: "/**",
       },
       ...hosts.flatMap((hostname) => [
         {

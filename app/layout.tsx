@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { ClerkProvider } from "@clerk/nextjs";
 import TopBar from "@/components/TopBar";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
@@ -10,16 +9,17 @@ import PromoBanners from "@/components/PromoBanners";
 import SearchModal from "@/components/SearchModal";
 import CookieConsent from "@/components/CookieConsent";
 import CartSidePanel from "@/components/shop/CartSidePanel";
+import CartDock from "@/components/shop/CartDock";
 import ServiceFeatures from "@/components/ServiceFeatures";
-import { isClerkConfigured } from "@/lib/clerk";
 import { SearchModalProvider } from "@/lib/search-modal";
 import { ShopStoreProvider } from "@/lib/shop-store";
 import { chimeSaans, marcel, viktor } from "./fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "La Gracia",
-  description: "La Gracia",
+  title: "Global Fruits Edinburgh Ltd",
+  description:
+    "Greengrocer in Tollcross, Edinburgh — fresh fruit, vegetables, exotic spices, and home deliveries.",
 };
 
 function AppShell({ children }: { children: React.ReactNode }) {
@@ -35,6 +35,7 @@ function AppShell({ children }: { children: React.ReactNode }) {
         <ConnectionAlert />
         <AlertToaster />
         <PromoBanners />
+        <CartDock />
         <CartSidePanel />
         <SearchModal />
         <CookieConsent />
@@ -43,24 +44,15 @@ function AppShell({ children }: { children: React.ReactNode }) {
   );
 }
 
-const FALLBACK_CLERK_PUB_KEY =
-  "pk_test_cGxhY2Vob2xkZXItY2xlcmstcGxheWdyb3VuZC5jbGVyay5hY2NvdW50cy5kZXYk";
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const publishableKey = isClerkConfigured()
-    ? process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY!
-    : FALLBACK_CLERK_PUB_KEY;
-
   return (
     <html lang="en" className={`${marcel.variable} ${viktor.variable} ${chimeSaans.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col max-lg:pb-[calc(4.75rem+env(safe-area-inset-bottom))]">
-        <ClerkProvider publishableKey={publishableKey} afterSignOutUrl="/">
-          <AppShell>{children}</AppShell>
-        </ClerkProvider>
+        <AppShell>{children}</AppShell>
       </body>
     </html>
   );

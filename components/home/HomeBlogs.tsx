@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { getBlogPosts } from "@/lib/blogs";
 import { homeContainerClass } from "@/components/home/homeLayout";
 
@@ -20,22 +19,15 @@ export default async function HomeBlogs() {
               Blogs
             </h2>
             <p className="mt-3 max-w-md text-[16px] leading-relaxed text-[#1a1a1a]/65">
-              Care guides, packing tips, and stories from the La Gracia studio.
+              Season notes, storage tips, and what’s arriving at Gillespie Place.
             </p>
           </div>
-          <Link
-            href="/blogs"
-            className="inline-flex text-[14px] font-medium text-accent transition-opacity hover:opacity-70"
-          >
-            View all →
-          </Link>
         </div>
 
         <div className="mt-12 grid gap-10 md:grid-cols-3">
           {featured.map((post, i) => (
-            <Link
+            <article
               key={post.slug}
-              href={`/blogs/${post.slug}`}
               className="group block  rounded-[24px] border border-black/8 bg-surface/80 p-4 text-left shadow-[0_12px_32px_rgba(26,26,26,0.04)] "
               style={{
                 animation: `cta-rise 0.85s ease-out ${0.06 * i}s both`,
@@ -54,10 +46,7 @@ export default async function HomeBlogs() {
                 {post.title}
               </h3>
             
-              <span className="mt-3 inline-block text-[14px] font-medium text-accent">
-                Read more →
-              </span>
-            </Link>
+            </article>
           ))}
         </div>
       </div>

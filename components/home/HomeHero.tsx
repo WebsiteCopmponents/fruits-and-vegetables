@@ -10,22 +10,22 @@ const AUTO_MS = 6000;
 
 const slides = [
   {
-    eyebrow: "New campaign",
-    title: "Softness in\nComfort",
-    cta: "Shop Collection",
-    href: "/shop",
+    eyebrow: "Gillespie Place",
+    title: "Fresh fruit\nevery day",
+    cta: "Shop fruit",
+    href: "/shop?collection=fruit",
     image:
-      "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=2000&q=80",
-    alt: "La Gracia leather tote campaign",
+      "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=2000&q=80",
+    alt: "Fresh fruit at Global Fruits",
   },
   {
-    eyebrow: "New arrivals",
-    title: "Carry less.\nCarry better.",
-    cta: "Shop Collection",
-    href: "/shop",
+    eyebrow: "From the crates",
+    title: "Vegetables\njust in",
+    cta: "Shop vegetables",
+    href: "/shop?collection=vegetables",
     image:
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=2000&q=80",
-    alt: "La Gracia canvas tote campaign",
+      "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=2000&q=80",
+    alt: "Fresh vegetables at Global Fruits",
   },
 ] as const;
 
@@ -64,9 +64,7 @@ export default function Hero() {
   }, [index, count]);
 
   return (
-    <>
-      {/* Fixed pinned hero — page content scrolls over this */}
-      <section className="pointer-events-none fixed inset-x-0 top-0 z-0 h-[100svh] overflow-hidden bg-[#5f6f5a] text-white">
+    <section className="relative h-[100svh] overflow-hidden bg-[#5f6f5a] text-white">
         {slides.map((item, i) => (
           <div
             key={item.image}
@@ -88,7 +86,7 @@ export default function Hero() {
         ))}
 
         <div
-          className={`pointer-events-auto relative z-10 flex h-full flex-col justify-center py-20 md:py-24 ${homeContainerClass} px-4 sm:px-6 lg:px-8`}
+          className={`relative z-10 flex h-full flex-col justify-center py-20 md:py-24 ${homeContainerClass} px-4 sm:px-6 lg:px-8`}
         >
           <div className="max-w-xl">
             <p className="text-[12px] font-semibold tracking-[0.22em] text-white uppercase">
@@ -111,9 +109,9 @@ export default function Hero() {
         </div>
 
         <div
-          className={`pointer-events-none absolute inset-x-0 bottom-0 z-10 pb-8 md:pb-10 ${homeContainerClass} px-4 sm:px-6 lg:px-8`}
+          className={`absolute inset-x-0 bottom-0 z-10 pb-8 md:pb-10 ${homeContainerClass} px-4 sm:px-6 lg:px-8`}
         >
-          <div className="pointer-events-auto flex items-center justify-end gap-4">
+          <div className="flex items-center justify-end gap-4">
             <p className="text-[13px] font-medium tracking-wide text-white tabular-nums">
               {index + 1}/{count}
             </p>
@@ -149,9 +147,5 @@ export default function Hero() {
           </div>
         </div>
       </section>
-
-      {/* Spacer so following sections start after one viewport */}
-      <div className="h-[100svh]" aria-hidden />
-    </>
   );
 }

@@ -2,9 +2,9 @@
 export const WHATSAPP_NUMBER = "15551234567";
 
 // Phone number for "Order on call" (E.164, digits only, include country code)
-export const CALL_NUMBER = "15551234567";
+export const CALL_NUMBER = "441312284429";
 
-export const EMAIL = "hello@lagracia.com";
+export const EMAIL = "hello@globalfruitsedinburgh.co.uk";
 
 export const WHATSAPP_CHAT_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
 export const MAILTO_URL = `mailto:${EMAIL}`;

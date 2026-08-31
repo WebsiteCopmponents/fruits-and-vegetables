@@ -3,40 +3,26 @@ import Link from "next/link";
 import { PaymentIcons } from "@/components/PaymentIcons";
 import { getMegaMenuCategories } from "@/lib/mega-menu";
 
-const companyLinks = [
-  { href: "/about", label: "Our Story" },
-  { href: "/contact", label: "Contact" },
-  { href: "/faqs", label: "FAQs" },
-  { href: "/blogs", label: "Blog" },
+const storeLinks = [
   { href: "/shop", label: "Shop All" },
-];
-
-const helpLinks = [
-  { href: "/faqs", label: "Help Center" },
-  { href: "/contact", label: "Live Chat" },
-  { href: "/shipping-returns", label: "Return Policy" },
-  { href: "/shipping-returns", label: "Shipping Info" },
-  { href: "/contact", label: "Bulk Orders" },
-];
-
-const legalLinks = [
-  { href: "/shipping-returns", label: "Accessibility" },
-  { href: "/terms", label: "Terms of Service" },
-  { href: "/privacy", label: "Privacy Policy" },
+  { href: "/wishlist", label: "Wishlist" },
+  { href: "/cart", label: "Cart" },
+  { href: "/search", label: "Search" },
+  { href: "/account", label: "Account" },
 ];
 
 const instagramPosts = [
   {
-    src: "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=400&q=80",
-    alt: "Leather tote",
+    src: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?auto=format&fit=crop&w=400&q=80",
+    alt: "Fresh apples",
   },
   {
-    src: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=400&q=80",
-    alt: "Canvas tote",
+    src: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?auto=format&fit=crop&w=400&q=80",
+    alt: "Fresh carrots",
   },
   {
-    src: "https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?auto=format&fit=crop&w=400&q=80",
-    alt: "Mini tote",
+    src: "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&w=400&q=80",
+    alt: "Fresh strawberries",
   },
 ];
 
@@ -80,15 +66,7 @@ export default async function Footer() {
               </button>
             </form>
             <p className="mt-3 text-[12px] leading-relaxed text-white/55">
-              By subscribing you agree to the{" "}
-              <Link href="/terms" className="font-medium text-white underline-offset-2 hover:underline">
-                Terms of Use
-              </Link>{" "}
-              &{" "}
-              <Link href="/privacy" className="font-medium text-white underline-offset-2 hover:underline">
-                Privacy Policy
-              </Link>
-              .
+              By subscribing you agree to receive updates from Global Fruits.
             </p>
           </div>
         </div>
@@ -96,9 +74,8 @@ export default async function Footer() {
         {/* Link columns + Instagram — Instagram column is wider */}
         <div className="flex flex-col gap-10 border-b border-white/10 py-12 lg:flex-row lg:items-start lg:gap-12">
           <div className="flex flex-1 flex-wrap gap-10 sm:gap-12 lg:gap-14">
-            <FooterColumn title="Company" links={companyLinks} />
-            <FooterColumn title="Collection" links={collectionLinks} />
-            <FooterColumn title="Get Help" links={helpLinks} />
+            <FooterColumn title="Shop" links={collectionLinks} />
+            <FooterColumn title="Store" links={storeLinks} />
           </div>
 
           <div className="w-full shrink-0 lg:w-[min(100%,580px)] lg:max-w-[62%]">
@@ -128,7 +105,7 @@ export default async function Footer() {
               rel="noreferrer"
               className="mt-3 inline-block text-[13px] text-white/70 transition-colors hover:text-white"
             >
-              @lagracia
+              @globalfruitsedinburgh
             </a>
           </div>
         </div>
@@ -150,23 +127,15 @@ export default async function Footer() {
             </SocialButton>
           </div>
 
-          <div className="flex flex-wrap gap-x-5 gap-y-2">
-            {legalLinks.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                className="text-[13px] text-white/65 transition-colors hover:text-white"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
+          <p className="text-[13px] text-white/65">
+            Fruit, vegetables, exotic spices, and home deliveries in Edinburgh.
+          </p>
         </div>
 
         {/* Copyright + payments */}
         <div className="flex flex-col gap-5 py-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-[12px] text-white/50">
-            © 2026 La Gracia. All rights reserved.
+            © 2026 Global Fruits Edinburgh Ltd. All rights reserved.
           </p>
 
           <div className="flex flex-wrap items-center gap-3">
@@ -176,7 +145,7 @@ export default async function Footer() {
               aria-label="Currency and language"
             >
               <span aria-hidden>🇺🇸</span>
-              USD / EN
+              GBP / EN
               <ChevronIcon />
             </button>
 

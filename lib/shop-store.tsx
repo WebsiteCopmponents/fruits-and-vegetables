@@ -31,11 +31,13 @@ type ShopStoreValue = {
   wishlistProducts: Product[];
   cartPanelOpen: boolean;
   cartPanelProductSlug: string | null;
+  cartBarOpen: boolean;
   getCatalogProduct: (slug: string) => Product | undefined;
   addToCart: (slug: string, qty?: number) => void;
   openCartPanel: (slug?: string) => void;
   closeCartPanel: () => void;
-  setQty: (slug: string, qty: number) => void;
+  hideCartBar: () => void;
+  setQty: (slug: string, qty: number, opts?: { silent?: boolean }) => void;
   removeFromCart: (slug: string) => void;
   clearCart: (opts?: { silent?: boolean }) => void;
   toggleWishlist: (slug: string) => void;
@@ -45,8 +47,8 @@ type ShopStoreValue = {
 
 const ShopStoreContext = createContext<ShopStoreValue | null>(null);
 
-const CART_KEY = "lagracia-cart";
-const WISH_KEY = "lagracia-wishlist";
+const CART_KEY = "global-fruits-cart";
+const WISH_KEY = "global-fruits-wishlist";
 
 function readJson<T>(key: string, fallback: T): T {
   if (typeof window === "undefined") return fallback;
@@ -73,6 +75,7 @@ export function ShopStoreProvider({ children }: { children: React.ReactNode }) {
   const [cartPanelProductSlug, setCartPanelProductSlug] = useState<string | null>(
     null,
   );
+  const [cartBarOpen, setCartBarOpen] = useState(false);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
@@ -123,6 +126,7 @@ export function ShopStoreProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!ready) return;
     window.localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    if (cart.length === 0) setCartBarOpen(false);
   }, [cart, ready]);
 
   useEffect(() => {
@@ -155,6 +159,10 @@ export function ShopStoreProvider({ children }: { children: React.ReactNode }) {
     setCartPanelOpen(false);
   }, []);
 
+  const hideCartBar = useCallback(() => {
+    setCartBarOpen(false);
+  }, []);
+
   const addToCart = useCallback(
     (slug: string, qty = 1) => {
       const product = resolveProduct(slug);
@@ -173,38 +181,44 @@ export function ShopStoreProvider({ children }: { children: React.ReactNode }) {
         return [...prev, { slug, qty }];
       });
       setCartPanelProductSlug(slug);
-      setCartPanelOpen(true);
+      setCartBarOpen(true);
     },
     [resolveProduct],
   );
 
   const setQty = useCallback(
-    (slug: string, qty: number) => {
+    (slug: string, qty: number, opts?: { silent?: boolean }) => {
       const product = resolveProduct(slug);
       const name = product?.name ?? "item";
       const inCart = cart.some((i) => i.slug === slug);
 
       if (!inCart) {
-        alertFailure("Couldn’t update cart. Item not found.");
+        if (!opts?.silent) {
+          alertFailure("Couldn’t update cart. Item not found.");
+        }
         return;
       }
 
       if (qty <= 0) {
-        alertProgress("Removing from cart…");
+        if (!opts?.silent) alertProgress("Removing from cart…");
         setCart((prev) => prev.filter((i) => i.slug !== slug));
-        window.setTimeout(() => {
-          alertSuccess(`Removed ${name} from cart`);
-        }, 220);
+        if (!opts?.silent) {
+          window.setTimeout(() => {
+            alertSuccess(`Removed ${name} from cart`);
+          }, 220);
+        }
         return;
       }
 
-      alertProgress("Updating quantity…");
+      if (!opts?.silent) alertProgress("Updating quantity…");
       setCart((prev) =>
         prev.map((i) => (i.slug === slug ? { ...i, qty } : i)),
       );
-      window.setTimeout(() => {
-        alertSuccess(`Updated ${name} to ×${qty}`);
-      }, 220);
+      if (!opts?.silent) {
+        window.setTimeout(() => {
+          alertSuccess(`Updated ${name} to ×${qty}`);
+        }, 220);
+      }
     },
     [resolveProduct, cart],
   );
@@ -319,10 +333,12 @@ export function ShopStoreProvider({ children }: { children: React.ReactNode }) {
       wishlistProducts,
       cartPanelOpen,
       cartPanelProductSlug,
+      cartBarOpen,
       getCatalogProduct,
       addToCart,
       openCartPanel,
       closeCartPanel,
+      hideCartBar,
       setQty,
       removeFromCart,
       clearCart,
@@ -344,10 +360,12 @@ export function ShopStoreProvider({ children }: { children: React.ReactNode }) {
       wishlistProducts,
       cartPanelOpen,
       cartPanelProductSlug,
+      cartBarOpen,
       getCatalogProduct,
       addToCart,
       openCartPanel,
       closeCartPanel,
+      hideCartBar,
       setQty,
       removeFromCart,
       clearCart,
@@ -381,10 +399,12 @@ export function useShopStore() {
       wishlistProducts: [],
       cartPanelOpen: false,
       cartPanelProductSlug: null,
+      cartBarOpen: false,
       getCatalogProduct: () => undefined,
       addToCart: () => {},
       openCartPanel: () => {},
       closeCartPanel: () => {},
+      hideCartBar: () => {},
       setQty: () => {},
       removeFromCart: () => {},
       clearCart: () => {},

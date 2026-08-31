@@ -1,9 +1,17 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { formatPrice, getProduct, getProducts } from "@/lib/products";
+import {
+  formatPrice,
+  getProduct,
+  getProductDetail,
+  getProductVariants,
+  getProducts,
+} from "@/lib/products";
 import ProductCard from "@/components/shop/ProductCard";
 import ProductBuyActions from "@/components/shop/ProductBuyActions";
 import ProductGallery from "@/components/shop/ProductGallery";
+import ProductReviews from "@/components/shop/ProductReviews";
+import ProductTrustList from "@/components/shop/ProductTrustList";
 
 export const dynamic = "force-dynamic";
 
@@ -36,6 +44,7 @@ export default async function ProductPage({
             images={product.images && product.images.length > 0 ? product.images : [product.image]}
             alt={product.name}
             badge={product.badge}
+            variants={getProductVariants(product)}
           />
 
           <div className="flex flex-col justify-center">
@@ -48,19 +57,17 @@ export default async function ProductPage({
             <p className="mt-3 text-[22px] text-[#1a1a1a]">
               {formatPrice(product.price)}
             </p>
-            <p className="mt-5 max-w-md text-[16px] leading-relaxed text-[#1a1a1a]/70">
-              {product.description}
+            <p className="mt-5 max-w-xl text-[16px] leading-relaxed text-[#1a1a1a]/70">
+              {getProductDetail(product)}
             </p>
 
             <ProductBuyActions slug={product.slug} />
 
-            <ul className="mt-10 space-y-2 text-[14px] text-[#1a1a1a]/65">
-              <li>Free shipping on orders over $85</li>
-              <li>Easy 30-day returns</li>
-              <li>Designed for everyday carry</li>
-            </ul>
+            <ProductTrustList className="mt-10" />
           </div>
         </div>
+
+        <ProductReviews productName={product.name} />
 
         {related.length > 0 ? (
           <section className="mt-20">

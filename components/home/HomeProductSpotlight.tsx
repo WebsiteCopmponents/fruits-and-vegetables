@@ -4,26 +4,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import CtaButton from "@/components/CtaButton";
+import ProductTrustList from "@/components/shop/ProductTrustList";
 import { homeContainerClass } from "@/components/home/homeLayout";
 import { formatPrice } from "@/lib/products";
 import { useShopStore } from "@/lib/shop-store";
 
-const sizes = ["Standard", "Large"] as const;
-const colors = [
-  { id: "natural", label: "Natural", swatch: "#c4a574" },
-  { id: "ink", label: "Ink", swatch: "#1a1a1a" },
-  { id: "sand", label: "Sand", swatch: "#e8dcc8" },
-] as const;
+const packs = ["6-pack", "Family"] as const;
 
 export default function HomeProductSpotlight() {
   const { catalog, addToCart, catalogReady } = useShopStore();
   const product = useMemo(
     () =>
-      catalog.find((p) => p.slug === "structured-leather-tote") || catalog[0],
+      catalog.find((p) => p.slug === "scottish-apples") || catalog[0],
     [catalog],
   );
-  const [size, setSize] = useState<(typeof sizes)[number]>("Standard");
-  const [color, setColor] = useState<(typeof colors)[number]["id"]>("natural");
+  const [pack, setPack] = useState<(typeof packs)[number]>("6-pack");
   const [qty, setQty] = useState(1);
 
   if (!catalogReady || !product) {
@@ -54,7 +49,7 @@ export default function HomeProductSpotlight() {
 
         <div className="md:pt-4 px-6">
           <p className="text-[12px] font-medium tracking-[0.2em] text-[#1a1a1a]/45 uppercase">
-            La Gracia
+            Global Fruits
           </p>
           <h2 className="mt-2 text-[32px] font-medium tracking-tight text-[#1a1a1a] md:text-[40px]">
             {product.name}
@@ -63,10 +58,7 @@ export default function HomeProductSpotlight() {
             {formatPrice(product.price)}
           </p>
           <p className="mt-2 text-[14px] text-[#1a1a1a]/50">
-            <Link href="/contact" className="underline underline-offset-2">
-              Shipping
-            </Link>{" "}
-            calculated at checkout.
+            Edinburgh home delivery available.
           </p>
           <p className="mt-5 max-w-md text-[15px] leading-relaxed text-[#1a1a1a]/65">
             {product.description}
@@ -74,16 +66,16 @@ export default function HomeProductSpotlight() {
 
           <div className="mt-8">
             <p className="text-[13px] font-medium text-[#1a1a1a]">
-              Size: <span className="font-normal text-[#1a1a1a]/60">{size}</span>
+              Pack: <span className="font-normal text-[#1a1a1a]/60">{pack}</span>
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
-              {sizes.map((s) => {
-                const on = size === s;
+              {packs.map((s) => {
+                const on = pack === s;
                 return (
                   <button
                     key={s}
                     type="button"
-                    onClick={() => setSize(s)}
+                    onClick={() => setPack(s)}
                     className={`rounded-full px-5 py-2.5 text-[13px] font-medium transition-colors ${
                       on
                         ? "bg-[#1a1a1a] text-white"
@@ -91,40 +83,6 @@ export default function HomeProductSpotlight() {
                     }`}
                   >
                     {s}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="mt-6">
-            <p className="text-[13px] font-medium text-[#1a1a1a]">
-              Color:{" "}
-              <span className="font-normal text-[#1a1a1a]/60">
-                {colors.find((c) => c.id === color)?.label}
-              </span>
-            </p>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {colors.map((c) => {
-                const on = color === c.id;
-                return (
-                  <button
-                    key={c.id}
-                    type="button"
-                    onClick={() => setColor(c.id)}
-                    aria-label={c.label}
-                    aria-pressed={on}
-                    className={`flex items-center gap-2 rounded-full border px-4 py-2.5 text-[13px] font-medium transition-colors ${
-                      on
-                        ? "border-[#1a1a1a] bg-[#1a1a1a] text-white"
-                        : "border-black/15 bg-surface text-[#1a1a1a] hover:border-black/30"
-                    }`}
-                  >
-                    <span
-                      className="size-3.5 rounded-full ring-1 ring-black/10"
-                      style={{ backgroundColor: c.swatch }}
-                    />
-                    {c.label}
                   </button>
                 );
               })}
@@ -180,6 +138,8 @@ export default function HomeProductSpotlight() {
               View full details
             </Link>
           </p>
+
+          <ProductTrustList className="mt-8" />
         </div>
       </div>
     </section>

@@ -158,7 +158,7 @@ export default function CartSuggestedItems({
         You may also like
       </h3>
       <p className="mt-1 text-[14px] text-[#1a1a1a]/55">
-        Pair your tote with these picks.
+        Pair your basket with these picks.
       </p>
 
       {loading ? (

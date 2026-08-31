@@ -6,9 +6,9 @@ import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
 const MESSAGES = [
-  "Free shipping on orders over $85*",
-  "10% off your first tote",
-  "Easy 30-day returns",
+  "Home deliveries available",
+  "Fruit · Vegetables · Exotic spices",
+  "5 Gillespie Pl, Edinburgh EH10 4HS",
 ];
 
 const AUTO_MS = 4000;

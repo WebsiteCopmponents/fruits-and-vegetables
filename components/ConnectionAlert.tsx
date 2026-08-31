@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useConnectionStatus } from "@/hooks/useConnectionStatus";
 
-const DISMISS_KEY = "lagracia-connection-alert-dismissed";
+const DISMISS_KEY = "global-fruits-connection-alert-dismissed";
 
 export default function ConnectionAlert() {
   const { level, ready } = useConnectionStatus();

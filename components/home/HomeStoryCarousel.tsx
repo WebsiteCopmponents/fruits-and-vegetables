@@ -19,11 +19,12 @@ const frames = [
 ] as const;
 
 const preferredSlugs = [
-  "everyday-canvas-tote",
-  "structured-leather-tote",
-  "weekend-market-tote",
-  "mini-crossbody-tote",
-  "hand-block-print-quilted-tote",
+  "scottish-apples",
+  "strawberries",
+  "scottish-carrots",
+  "mango",
+  "greengages",
+  "fresh-ginger",
 ] as const;
 
 function pickStoryProducts(catalog: Product[]) {
@@ -77,7 +78,7 @@ export default function HomeStoryCarousel() {
     <section className="bg-white py-14 md:py-20">
       <div className={homeContainerClass}>
         <h2 className="text-center text-[28px] font-medium tracking-tight text-[#1a1a1a] md:text-[36px]">
-          Carry what matters, comfortably
+          Fresh from Gillespie Place
         </h2>
       </div>
 

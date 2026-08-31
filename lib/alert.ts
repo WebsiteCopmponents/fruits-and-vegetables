@@ -7,8 +7,8 @@ export type AlertPayload = {
   duration?: number;
 };
 
-export const ALERT_EVENT = "lagracia-alert";
-const PENDING_KEY = "lagracia-pending-alert";
+export const ALERT_EVENT = "global-fruits-alert";
+const PENDING_KEY = "global-fruits-pending-alert";
 
 /** Fire a toast from anywhere (cart, wishlist, checkout, auth, etc.). */
 export function showAlert(payload: AlertPayload) {

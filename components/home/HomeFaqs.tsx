@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { homeContainerClass } from "@/components/home/homeLayout";
 import { MotionAccordion } from "@/components/MotionAccordion";
 import { faqItems } from "@/lib/faqs";
@@ -22,12 +21,6 @@ export default function HomeFaqs() {
             Quick answers on materials, shipping, returns, and care — so you can
             choose with confidence.
           </p>
-          <Link
-            href="/contact"
-            className="mt-8 inline-flex text-[14px] font-medium text-accent transition-opacity hover:opacity-70"
-          >
-            Still have a question? Contact us →
-          </Link>
         </div>
 
         <MotionAccordion

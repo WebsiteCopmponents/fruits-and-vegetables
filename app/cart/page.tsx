@@ -13,16 +13,16 @@ export default function CartPage() {
 
   return (
     <PageShell
-      eyebrow="Bag"
+      eyebrow="Cart"
       title="Cart"
-      description="Review your totes before checkout."
+      description="Review your produce before checkout."
     >
       {cartCount === 0 ? (
         <EmptyState
           title="Your cart is empty"
-          body="Browse the shop and add a tote when you’re ready."
+          body="Browse the shop and add produce when you’re ready."
           href="/shop"
-          cta="Shop totes"
+          cta="Shop produce"
         />
       ) : (
         <div className="grid gap-10 lg:grid-cols-[1.4fr_0.8fr]">

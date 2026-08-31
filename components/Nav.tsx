@@ -1,23 +1,17 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { usePathname } from "next/navigation";
-import { useAuth } from "@/hooks/auth";
 import ShopMegaMenu from "@/components/ShopMegaMenu";
-import AccountMenu from "@/components/AccountMenu";
-import { isClerkConfigured } from "@/lib/clerk";
 import { useSearchModalActions } from "@/lib/search-modal";
 import { useShopStore } from "@/lib/shop-store";
 import type { MegaMenuGroup } from "@/lib/mega-menu";
-//file :- components/Nav.tsx
+
 const links = [
   { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
   { href: "/shop", label: "Shop All", mega: true },
-  { href: "/blogs", label: "Blogs" },
-  { href: "/contact", label: "Contact" },
 ];
 
 export default function Nav() {
@@ -27,7 +21,12 @@ export default function Nav() {
   const [shopOpen, setShopOpen] = useState(false);
   const [mobileShopOpen, setMobileShopOpen] = useState(false);
   const [megaGroups, setMegaGroups] = useState<MegaMenuGroup[]>([]);
+  const [drawerReady, setDrawerReady] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    setDrawerReady(true);
+  }, []);
 
   useEffect(() => {
     setOpen(false);
@@ -73,22 +72,9 @@ export default function Nav() {
   }
 
   return (
-    <div
-      className={`sticky top-0 ${open ? "z-[90]" : "z-50"}`}
-      onMouseLeave={() => closeShop(80)}
-    >
-      <header
-        className={`relative border-b border-black/6 bg-white backdrop-blur-md ${
-          open ? "z-[100]" : "z-50"
-        }`}
-      >
-        <div
-          className={`relative mx-auto grid h-16 max-w-[1340px] items-center gap-3 px-4 sm:px-6 md:h-20 lg:px-8 ${
-            open
-              ? "grid-cols-1 justify-items-end lg:grid-cols-[1fr_auto_1fr]"
-              : "grid-cols-[1fr_auto] lg:grid-cols-[1fr_auto_1fr]"
-          }`}
-        >
+    <div className="sticky top-0 z-50" onMouseLeave={() => closeShop(80)}>
+      <header className="relative z-50 border-b border-black/6 bg-white backdrop-blur-md">
+        <div className="relative mx-auto grid h-16 max-w-[1340px] grid-cols-[1fr_auto] items-center gap-3 px-4 sm:px-6 md:h-20 lg:grid-cols-[1fr_auto_1fr] lg:px-8">
           {/* Desktop: nav left */}
           <nav className="hidden items-center gap-7 justify-self-start lg:flex">
             {links.map((link) => {
@@ -160,19 +146,12 @@ export default function Nav() {
           {/* Logo — centered on desktop, left on mobile */}
           <Link
             href="/"
-            aria-label="La Gracia home"
-            className={`${
-              open ? "hidden lg:block" : "justify-self-start"
-            } lg:justify-self-center`}
+            aria-label="Global Fruits home"
+            className="justify-self-start lg:justify-self-center"
           >
-            <Image
-              src="/la-gracia-logo.png"
-              alt="La Gracia"
-              width={160}
-              height={40}
-              priority
-              className="h-9 w-auto object-contain sm:h-10"
-            />
+            <span className="block text-[17px] font-semibold tracking-tight text-[#1a1a1a] sm:text-[20px]">
+              Global Fruits
+            </span>
           </Link>
 
           {/* Desktop: search + account + wishlist + cart */}
@@ -196,58 +175,39 @@ export default function Nav() {
               </span>
             </button>
 
-            <DesktopAccount light />
+            <AccountButton light />
             <WishlistButton light />
             <CartButton light />
           </div>
 
-          {/* Mobile: our existing controls + drawer */}
-          {!open ? (
-            <div className="relative z-20 flex items-center justify-self-end gap-1 lg:hidden">
-              <button
-                type="button"
-                aria-label="Search"
-                onPointerDown={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  setShopOpen(false);
-                  openSearch();
-                }}
-                className="flex size-11 items-center justify-center rounded-full text-black transition-colors hover:bg-black/5"
-              >
-                <SearchIcon />
-              </button>
-              <CartButton light />
-              <button
-                type="button"
-                aria-label="Open menu"
-                aria-expanded={false}
-                onClick={() => setOpen(true)}
-                className="relative flex size-11 items-center justify-center rounded-full text-black transition-colors hover:bg-black/5"
-              >
-                <span className="relative block h-3.5 w-5">
-                  <span className="absolute top-0.5 left-0 h-[1.5px] w-full bg-current" />
-                  <span className="absolute top-3 left-0 h-[1.5px] w-full bg-current" />
-                </span>
-              </button>
-            </div>
-          ) : (
+          <div className="relative z-20 flex items-center justify-self-end gap-1 lg:hidden">
             <button
               type="button"
-              aria-label="Close menu"
-              aria-expanded={true}
-              onClick={() => {
-                setOpen(false);
-                setMobileShopOpen(false);
+              aria-label="Search"
+              onPointerDown={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setShopOpen(false);
+                openSearch();
               }}
-              className="relative z-[110] flex size-11 items-center justify-center rounded-full text-black transition-colors hover:bg-black/5 lg:hidden"
+              className="flex size-11 items-center justify-center rounded-full text-black transition-colors hover:bg-black/5"
+            >
+              <SearchIcon />
+            </button>
+            <CartButton light />
+            <button
+              type="button"
+              aria-label="Open menu"
+              aria-expanded={open}
+              onClick={() => setOpen(true)}
+              className="relative flex size-11 items-center justify-center rounded-full text-black transition-colors hover:bg-black/5"
             >
               <span className="relative block h-3.5 w-5">
-                <span className="absolute top-1.5 left-0 h-[1.5px] w-full rotate-45 bg-current" />
-                <span className="absolute top-1.5 left-0 h-[1.5px] w-full -rotate-45 bg-current" />
+                <span className="absolute top-0.5 left-0 h-[1.5px] w-full bg-current" />
+                <span className="absolute top-3 left-0 h-[1.5px] w-full bg-current" />
               </span>
             </button>
-          )}
+          </div>
         </div>
       </header>
 
@@ -268,336 +228,252 @@ export default function Nav() {
         />
       ) : null}
 
-      <div
-        aria-hidden={!open}
-        className={`fixed inset-0 z-[90] w-full lg:hidden ${
-          open ? "pointer-events-auto" : "pointer-events-none"
-        }`}
-      >
-        <aside
-          className={`relative flex h-dvh w-full flex-col overflow-hidden bg-surface pt-[72px] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-            open ? "translate-y-0 opacity-100" : "-translate-y-4 opacity-0"
-          }`}
-        >
-          <nav className="flex w-full flex-1 flex-col justify-center gap-1 overflow-y-auto px-6 py-4">
-            {links.map((link, i) => {
-              const active = isActive(link.href);
-
-              if (link.mega) {
-                return (
-                  <button
-                    key={link.href}
-                    type="button"
-                    aria-expanded={mobileShopOpen}
-                    onClick={() => setMobileShopOpen(true)}
-                    className={`flex w-full items-center justify-between rounded-2xl px-2 py-3 text-left text-[28px] font-medium tracking-tight transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                      active ? "text-accent" : "text-black"
-                    } ${
-                      open
-                        ? "translate-y-0 opacity-100"
-                        : "translate-y-6 opacity-0"
-                    }`}
-                    style={{
-                      transitionDelay: open ? `${100 + i * 55}ms` : "0ms",
-                    }}
+      {drawerReady
+        ? createPortal(
+            <div
+              aria-hidden={!open}
+              inert={!open}
+              className={`fixed inset-0 z-[220] w-full bg-white lg:hidden transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                open
+                  ? "pointer-events-auto translate-x-0"
+                  : "pointer-events-none translate-x-full"
+              }`}
+            >
+              <aside className="relative flex h-dvh w-full flex-col overflow-hidden bg-white pt-[env(safe-area-inset-top)]">
+                <div className="flex h-16 shrink-0 items-center justify-between border-b border-[#EDEDED] px-5">
+                  <Link
+                    href="/"
+                    onClick={() => setOpen(false)}
+                    className="text-[20px] leading-none font-semibold tracking-tight text-[#1a1a1a]"
                   >
-                    {link.label}
-                    <svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 12 12"
-                      fill="none"
-                      aria-hidden
-                    >
-                      <path
-                        d="M4.5 2.5L8 6l-3.5 3.5"
-                        stroke="currentColor"
-                        strokeWidth="1.4"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
+                    Global Fruits
+                  </Link>
+                  <button
+                    type="button"
+                    aria-label="Close menu"
+                    onClick={() => {
+                      setOpen(false);
+                      setMobileShopOpen(false);
+                    }}
+                    className="flex size-10 items-center justify-center text-[#1a1a1a]"
+                  >
+                    <CloseXIcon />
                   </button>
-                );
-              }
+                </div>
 
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className={`w-full rounded-2xl px-2 py-3 text-[28px] font-medium tracking-tight transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                    active ? "text-accent" : "text-black hover:text-black/55"
-                  } ${
-                    open
-                      ? "translate-y-0 opacity-100"
-                      : "translate-y-6 opacity-0"
-                  }`}
-                  style={{
-                    transitionDelay: open ? `${100 + i * 55}ms` : "0ms",
-                  }}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
-          </nav>
-
-          <div
-            className={`w-full px-6 pb-10 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-              open ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-            }`}
-            style={{ transitionDelay: open ? "350ms" : "0ms" }}
-          >
-            <MobileAccount onClose={() => setOpen(false)} />
-          </div>
-
-          {/* Second-level shop panel — slides over the main drawer */}
-          <div
-            aria-hidden={!mobileShopOpen}
-            className={`absolute inset-0 z-10 flex flex-col bg-surface pt-[72px] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-              mobileShopOpen ? "translate-x-0" : "translate-x-full"
-            }`}
-          >
-            <div className="flex items-center gap-3 border-b border-black/8 px-5 py-3">
-              <button
-                type="button"
-                aria-label="Back to menu"
-                onClick={() => setMobileShopOpen(false)}
-                className="flex size-10 items-center justify-center rounded-full text-black hover:bg-black/5"
-              >
-                <svg width="18" height="18" viewBox="0 0 12 12" fill="none" aria-hidden>
-                  <path
-                    d="M7.5 2.5L4 6l3.5 3.5"
-                    stroke="currentColor"
-                    strokeWidth="1.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
-              <p className="text-[18px] font-medium tracking-tight text-[#1a1a1a]">
-                Shop All
-              </p>
-            </div>
-
-            <div className="flex-1 overflow-y-auto px-6 py-6">
-              <Link
-                href="/shop"
-                onClick={() => setOpen(false)}
-                className="mb-6 inline-flex text-[15px] font-medium text-[#c45c6a] underline underline-offset-4"
-              >
-                Shop all products
-              </Link>
-
-              <div className="space-y-7">
-                {megaGroups.map((group) => (
-                  <div key={group.slug}>
-                    <Link
-                      href={group.href}
-                      onClick={() => setOpen(false)}
-                      className="text-[13px] font-medium tracking-[0.14em] text-accent uppercase"
-                    >
-                      {group.label}
-                    </Link>
-                    <ul className="mt-3 space-y-3">
-                      <li>
-                        <Link
-                          href={group.href}
-                          onClick={() => setOpen(false)}
-                          className="block text-[20px] font-medium text-black"
-                        >
-                          Shop all {group.label}
-                        </Link>
-                      </li>
-                      {group.children.map((child) => (
-                        <li key={child.slug}>
-                          <Link
-                            href={child.href}
-                            onClick={() => setOpen(false)}
-                            className="block text-[18px] text-black/70"
-                          >
-                            {child.label}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
+                <nav className="flex-1 overflow-y-auto pt-2">
+                  <div className="px-5">
+                    <DrawerRow
+                      label="Shop"
+                      chevron
+                      onClick={() => setMobileShopOpen(true)}
+                    />
+                    <DrawerRow
+                      label="Bestsellers"
+                      href="/shop?new=1"
+                      chevron
+                      onNavigate={() => setOpen(false)}
+                    />
+                    <DrawerRow
+                      label="Home delivery"
+                      href="/shop?collection=home-delivery"
+                      chevron
+                      onNavigate={() => setOpen(false)}
+                    />
                   </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </aside>
-      </div>
+
+                  <div className="mx-5 h-px bg-[#EDEDED]" />
+
+                  <div className="px-5">
+                    <DrawerRow
+                      label="Store location"
+                      href="/#store-location"
+                      onNavigate={() => setOpen(false)}
+                    />
+                    <DrawerRow
+                      label="Reviews"
+                      href="/#reviews"
+                      onNavigate={() => setOpen(false)}
+                    />
+                  </div>
+
+                  <div className="mx-5 h-px bg-[#EDEDED]" />
+
+                  <div className="px-5">
+                    <DrawerRow
+                      label="Account"
+                      href="/account"
+                      onNavigate={() => setOpen(false)}
+                    />
+                    <DrawerRow
+                      label="Wishlist"
+                      href="/wishlist"
+                      onNavigate={() => setOpen(false)}
+                    />
+                  </div>
+                </nav>
+
+                <div
+                  aria-hidden={!mobileShopOpen}
+                  inert={!mobileShopOpen}
+                  className={`absolute inset-0 z-10 flex flex-col bg-white pt-[env(safe-area-inset-top)] transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                    mobileShopOpen
+                      ? "pointer-events-auto translate-x-0"
+                      : "pointer-events-none translate-x-full"
+                  }`}
+                >
+                  <div className="flex h-16 shrink-0 items-center justify-between border-b border-[#EDEDED] px-5">
+                    <button
+                      type="button"
+                      aria-label="Back to menu"
+                      onClick={() => setMobileShopOpen(false)}
+                      className="flex items-center gap-2 text-[17px] font-medium text-[#1a1a1a]"
+                    >
+                      <ChevronLeftIcon />
+                      Shop
+                    </button>
+                    <button
+                      type="button"
+                      aria-label="Close menu"
+                      onClick={() => {
+                        setOpen(false);
+                        setMobileShopOpen(false);
+                      }}
+                      className="flex size-10 items-center justify-center text-[#1a1a1a]"
+                    >
+                      <CloseXIcon />
+                    </button>
+                  </div>
+
+                  <div className="flex-1 overflow-y-auto">
+                    <div className="px-5">
+                      <DrawerRow
+                        label="Shop all"
+                        href="/shop"
+                        onNavigate={() => setOpen(false)}
+                      />
+                      {megaGroups.map((group) => (
+                        <div key={group.slug}>
+                          <DrawerRow
+                            label={group.label}
+                            href={group.href}
+                            onNavigate={() => setOpen(false)}
+                          />
+                          {group.children.map((child) => (
+                            <DrawerRow
+                              key={child.slug}
+                              label={child.label}
+                              href={child.href}
+                              onNavigate={() => setOpen(false)}
+                            />
+                          ))}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </aside>
+            </div>,
+            document.body,
+          )
+        : null}
     </div>
   );
 }
 
-function DesktopAccount({ light }: { light: boolean }) {
-  if (!isClerkConfigured()) {
+function DrawerRow({
+  label,
+  href,
+  chevron,
+  onClick,
+  onNavigate,
+}: {
+  label: string;
+  href?: string;
+  chevron?: boolean;
+  onClick?: () => void;
+  onNavigate?: () => void;
+}) {
+  const className =
+    "flex min-h-[56px] w-full items-center justify-between py-4 text-left text-[17px] font-medium text-[#1a1a1a]";
+
+  const content = (
+    <>
+      <span>{label}</span>
+      {chevron ? <ChevronRightIcon /> : null}
+    </>
+  );
+
+  if (href) {
     return (
-      <Link
-        href="/auth"
-        aria-label="Account"
-        className={`flex size-11 items-center justify-center rounded-full transition-colors ${
-          light ? "text-black hover:bg-black/5" : "text-white hover:bg-white/10"
-        }`}
-      >
-        <UserIcon />
+      <Link href={href} onClick={onNavigate} className={className}>
+        {content}
       </Link>
     );
   }
 
-  return <DesktopAccountWithClerk light={light} />;
+  return (
+    <button type="button" onClick={onClick} className={className}>
+      {content}
+    </button>
+  );
 }
 
-function DesktopAccountWithClerk({ light }: { light: boolean }) {
-  const { isLoaded, isSignedIn, user, logout } = useAuth();
+function CloseXIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M6 6l12 12M18 6L6 18"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
 
-  if (!isLoaded) return <div className="size-11" />;
+function ChevronRightIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 12 12" fill="none" aria-hidden>
+      <path
+        d="M4.5 2.5L8 6l-3.5 3.5"
+        stroke="#C4C4C4"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
 
-  if (isSignedIn) {
-    return (
-      <AccountMenu user={user} light={light} onLogout={() => void logout()} />
-    );
-  }
+function ChevronLeftIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 12 12" fill="none" aria-hidden>
+      <path
+        d="M7.5 2.5L4 6l3.5 3.5"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function AccountButton({ light }: { light: boolean }) {
+  const active = usePathname() === "/account";
 
   return (
     <Link
-      href="/auth"
+      href="/account"
       aria-label="Account"
       className={`flex size-11 items-center justify-center rounded-full transition-colors ${
         light ? "text-black hover:bg-black/5" : "text-white hover:bg-white/10"
-      }`}
+      } ${active ? "bg-black/5" : ""}`}
     >
       <UserIcon />
     </Link>
   );
-}
-
-function MobileAccount({
-  onClose,
-}: {
-  onClose: () => void;
-}) {
-  if (!isClerkConfigured()) {
-    return <MobileAuthActions onClose={onClose} />;
-  }
-
-  return <MobileAccountWithClerk onClose={onClose} />;
-}
-
-function MobileAuthActions({
-  onClose,
-}: {
-  onClose: () => void;
-}) {
-  return (
-    <div className="space-y-2.5">
-      <div className="grid grid-cols-2 gap-2.5">
-        <Link
-          href="/auth"
-          onClick={onClose}
-          className="flex items-center justify-center rounded-full bg-[#1a1a1a] py-3.5 text-[14px] font-medium text-white transition-opacity hover:opacity-90"
-        >
-          Login
-        </Link>
-        <Link
-          href="/auth?mode=sign-up"
-          onClick={onClose}
-          className="flex items-center justify-center rounded-full border border-black/15 py-3.5 text-[14px] font-medium text-black transition-colors hover:bg-black/5"
-        >
-          Sign up
-        </Link>
-      </div>
-      <Link
-        href="/contact"
-        onClick={onClose}
-        className="flex w-full items-center justify-center rounded-full border border-black/15 py-3.5 text-[14px] font-medium text-black transition-colors hover:bg-black/5"
-      >
-        Contact
-      </Link>
-    </div>
-  );
-}
-
-function MobileAccountWithClerk({
-  onClose,
-}: {
-  onClose: () => void;
-}) {
-  const { isLoaded, isSignedIn, user, logout } = useAuth();
-
-  if (!isLoaded) return null;
-
-  if (isSignedIn) {
-    return (
-      <div className="space-y-2.5">
-        <div className="flex items-center gap-3 rounded-2xl bg-soft px-3 py-3">
-          {user?.imageUrl ? (
-            <Image
-              src={user.imageUrl}
-              alt=""
-              width={40}
-              height={40}
-              className="size-10 rounded-full object-cover"
-            />
-          ) : (
-            <span className="flex size-10 items-center justify-center rounded-full bg-surface text-[14px] font-medium text-accent">
-              {(
-                user?.fullName ||
-                user?.username ||
-                user?.primaryEmailAddress?.emailAddress ||
-                "A"
-              )
-                .charAt(0)
-                .toUpperCase()}
-            </span>
-          )}
-          <div className="min-w-0">
-            <p className="truncate text-[14px] font-medium text-[#1a1a1a]">
-              {user?.fullName ||
-                user?.username ||
-                user?.primaryEmailAddress?.emailAddress}
-            </p>
-            {user?.fullName || user?.username ? (
-              <p className="truncate text-[12px] text-[#1a1a1a]/50">
-                {user?.primaryEmailAddress?.emailAddress}
-              </p>
-            ) : null}
-          </div>
-        </div>
-        <div className="grid grid-cols-2 gap-2.5">
-          <Link
-            href="/account"
-            onClick={onClose}
-            className="flex items-center justify-center rounded-full border border-black/15 py-3.5 text-[14px] font-medium text-black transition-colors hover:bg-black/5"
-          >
-            Account
-          </Link>
-          <button
-            type="button"
-            onClick={() => {
-              onClose();
-              void logout();
-            }}
-            className="flex items-center justify-center rounded-full border border-black/15 py-3.5 text-[14px] font-medium text-[#e11d48] transition-colors hover:bg-red-50"
-          >
-            Log out
-          </button>
-        </div>
-        <Link
-          href="/contact"
-          onClick={onClose}
-          className="flex w-full items-center justify-center rounded-full border border-black/15 py-3.5 text-[14px] font-medium text-black transition-colors hover:bg-black/5"
-        >
-          Contact
-        </Link>
-      </div>
-    );
-  }
-
-  return <MobileAuthActions onClose={onClose} />;
 }
 
 function WishlistButton({ light }: { light: boolean }) {

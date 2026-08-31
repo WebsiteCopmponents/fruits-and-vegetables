@@ -19,14 +19,14 @@ type BannerConfig = {
 
 const CONFIG: Record<BannerKind, BannerConfig> = {
   entry: {
-    eyebrow: "Welcome to La Gracia",
-    heading: "Get 10% off your first tote",
+    eyebrow: "Welcome to Global Fruits",
+    heading: "Get 10% off your first box",
     paragraph:
-      "Join our list for early access to new drops, restocks, and members-only offers. Drop your details and we’ll be in touch.",
+      "Join our list for weekly produce, exotic spices, and home-delivery offers. Drop your details and we’ll be in touch.",
     submitLabel: "Claim my offer",
     image:
-      "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=900&q=80",
-    imageAlt: "Structured leather tote",
+      "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=900&q=80",
+    imageAlt: "Fresh fruit at Global Fruits",
   },
   exit: {
     eyebrow: "Wait — before you go",
@@ -35,13 +35,13 @@ const CONFIG: Record<BannerKind, BannerConfig> = {
       "Leave your email or phone and we’ll hold your favourites, share offers, or call you back to complete your order.",
     submitLabel: "Keep me posted",
     image:
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=900&q=80",
-    imageAlt: "Everyday canvas tote",
+      "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=900&q=80",
+    imageAlt: "Fresh vegetables at Global Fruits",
   },
 };
 
-const ENTRY_KEY = "lagracia-entry-banner-seen";
-const EXIT_KEY = "lagracia-exit-banner-seen";
+const ENTRY_KEY = "global-fruits-entry-banner-seen";
+const EXIT_KEY = "global-fruits-exit-banner-seen";
 const ENTRY_DELAY = 1400;
 const DESKTOP_MQ = "(min-width: 768px)";
 
@@ -258,7 +258,7 @@ function PromoModal({
             </form>
 
             <p className="mt-3 text-[11px] leading-relaxed text-[#1a1a1a]/45 sm:mt-4 sm:text-[12px]">
-              We’ll only use your details to contact you about La Gracia. No spam.
+              We’ll only use your details to contact you about Global Fruits. No spam.
             </p>
           </div>
 

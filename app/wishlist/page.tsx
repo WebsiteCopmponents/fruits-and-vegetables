@@ -11,11 +11,11 @@ export default function WishlistPage() {
     <PageShell
       eyebrow="Saved"
       title="Wishlist"
-      description="Totes you’ve saved for later."
+      description="Produce you’ve saved for later."
     >
       {wishlistProducts.length === 0 ? (
         <EmptyState
-          title="No saved totes yet"
+          title="No saved items yet"
           body="Tap the heart on any product card to add it here."
           href="/shop"
           cta="Browse shop"

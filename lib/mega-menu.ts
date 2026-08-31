@@ -1,5 +1,3 @@
-import { fetchWooCategories, isWooConfigured } from "@/lib/woo";
-
 export type MegaMenuLink = {
   slug: string;
   label: string;
@@ -10,30 +8,31 @@ export type MegaMenuGroup = MegaMenuLink & {
   children: MegaMenuLink[];
 };
 
-/**
- * Display tree for Shop mega menu + shop filters.
- * Slugs match WooCommerce categories on ship.lagracia.co.uk;
- * labels follow the storefront naming you want shown.
- */
 export const MEGA_TREE: Array<{
   slug: string;
   label: string;
   children: Array<{ slug: string; label: string }>;
 }> = [
   {
-    slug: "tote-bags",
-    label: "Tote Bags",
+    slug: "fruit",
+    label: "Fruit",
     children: [
-      { slug: "kids-tote-bags", label: "Kids Tote Bags" },
-      { slug: "coasters", label: "Coasters" },
+      { slug: "seasonal-fruit", label: "Seasonal Fruit" },
+      { slug: "exotic-fruit", label: "Exotic Fruit" },
     ],
   },
   {
-    slug: "jute-bags",
-    label: "Jute Tote Bags",
+    slug: "vegetables",
+    label: "Vegetables",
     children: [
-      { slug: "jute-gift-bags", label: "Jute Wine Gift Bags" },
+      { slug: "everyday-veg", label: "Everyday Veg" },
+      { slug: "salad", label: "Salad" },
     ],
+  },
+  {
+    slug: "exotic-spices",
+    label: "Exotic Spices",
+    children: [{ slug: "fresh-spices", label: "Fresh Spices" }],
   },
 ];
 
@@ -56,12 +55,10 @@ function toGroup(group: (typeof MEGA_TREE)[number]): MegaMenuGroup {
 
 const FALLBACK_GROUPS: MegaMenuGroup[] = MEGA_TREE.map(toGroup);
 
-/** Sync filter tree for the shop page (no network). */
 export function getShopFilterTree(): MegaMenuGroup[] {
   return FALLBACK_GROUPS;
 }
 
-/** Category slugs included when a filter option is selected (parent includes children). */
 export function collectionFilterSlugs(
   slug: string,
   tree: MegaMenuGroup[] = FALLBACK_GROUPS,
@@ -78,43 +75,5 @@ export function collectionFilterSlugs(
 }
 
 export async function getMegaMenuCategories(): Promise<MegaMenuGroup[]> {
-  if (!isWooConfigured()) return FALLBACK_GROUPS;
-
-  try {
-    const cats = await fetchWooCategories({ hideEmpty: false });
-    const bySlug = new Map(
-      cats
-        .filter((c) => c.slug !== "uncategorized")
-        .map((c) => [c.slug, c] as const),
-    );
-
-    const groups = MEGA_TREE.map((group) => {
-      const parent = bySlug.get(group.slug);
-      if (!parent) return null;
-
-      const children = group.children
-        .map((child) => {
-          const found = bySlug.get(child.slug);
-          if (!found) return null;
-          return {
-            slug: found.slug,
-            label: child.label,
-            href: shopCollectionHref(found.slug),
-          };
-        })
-        .filter((item): item is MegaMenuLink => item !== null);
-
-      return {
-        slug: parent.slug,
-        label: group.label,
-        href: shopCollectionHref(parent.slug),
-        children,
-      };
-    }).filter((item): item is MegaMenuGroup => item !== null);
-
-    return groups.length > 0 ? groups : FALLBACK_GROUPS;
-  } catch (err) {
-    console.error("[mega-menu]", err);
-    return FALLBACK_GROUPS;
-  }
+  return FALLBACK_GROUPS;
 }
